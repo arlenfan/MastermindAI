@@ -5,10 +5,7 @@ CONTENTS OF THE FOLDER
 		main content of the MasterMind
 	README.txt
 		README file of MasterMind (this file)
-	OUTPUT.txt
-		OUTPUT file of MasterMind
-		
-//GRADE THIS VERSION
+
 This is the codebreaker for the classic game Mastermind. There are colors and positions. Each turn, the game gives the correct colors in the correct position and correct color in the wrong position. The codebreaker generates all the possible arrays and removes the elements based on the user input. For example, if the correct answer is RBG, then RRR would return 1 correct in the correct position, and then 0 correct in the wrong position. Each turn narrows all the elements in the array.
 
 Notes: The program has default colors 1-8 :
