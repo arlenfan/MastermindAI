@@ -1,14 +1,7 @@
-//Arlen Fan
-
-//MasterMind Codebreaker
-//project compliance 1.5+
-
 import java.util.*;
 import java.util.Random;
 
 public class MasterMind {
-
-    public static String name;
     public static int positions;
     public static int numberTokens;
     public static ArrayList<String> mainTokens = new ArrayList<String>();
@@ -88,16 +81,13 @@ public class MasterMind {
                         continue;
                     }
 
-
                     if (temp.charAt(j) == mainTokens.get(i).charAt(k)) {
                         y++;
                         forbidden.add(k);
                         break;
                     }
                 }
-
             }
-
             forbidden.clear();
             doubleForbidden.clear();
 
@@ -107,11 +97,7 @@ public class MasterMind {
                 i--;
             }
             y = 0;
-
-
         }
-
-
         nextMove();
 
 
@@ -163,7 +149,6 @@ public class MasterMind {
             System.exit(0);
         }
 
-
         Random randomGenerator = new Random();
         guessIndex = randomGenerator.nextInt(mainTokens.size());
         guesses++;
@@ -179,7 +164,6 @@ public class MasterMind {
     }
 
 
-    // This method converts a code (such as 000) into "RED-RED-RED"
     public static String guessFix(String a) {
         String returnString = "";
         String colors[] = {"RED", "GREEN", "BLUE",
@@ -192,7 +176,6 @@ public class MasterMind {
         return returnString;
     }
 
-
     public static String nullremove(String a) {
         //this method removes the first 4 chars null at the beginning of the strings
         String returnString = "";
@@ -204,9 +187,7 @@ public class MasterMind {
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        System.out.printf("Welcome to MasterMind. Enter your name: ");
-        name = in.nextLine();
-        System.out.printf("Hello, " + name + "." + " Enter number of positions(1-8): ");
+        System.out.printf("Enter number of positions(1-8): ");
         positions = in.nextInt();
         System.out.printf("The number of positions: " + positions + ". Enter number of tokens/colors(1-8): ");
         numberTokens = in.nextInt();
@@ -216,29 +197,21 @@ public class MasterMind {
         long bytes = 0;
         bytes = (long) Math.pow(numberTokens, positions) * (positions + 1) / 8;
         System.out.println("The array size: " + bytes + " bytes " + "(" + bytes / 1000 + " KB)");
-        if (bytes > 100000) {
-            System.out.println("Warning. The size of the array is > 1 megabit. Program may take a long time to run.");
-            System.out.println("The runtime grows exponentially. If it is taking too long, try smaller numbers.");
-            System.out.println("The program takes ~50 seconds to process 1024 KB. (a million permutations)");
-        }
+
 
         String[] tokens = new String[(int) Math.pow(numberTokens, positions)];
         generateArray(tokens, positions, numberTokens);
-
         System.out.println("Done.");
         MasterMind mm = new MasterMind(tokens, positions, numberTokens);
     }
 
     public static String[] generateArray(String[] x, int y, int z) {
-        //y positions, append this many times
-        //z colors/types
         int possibilities = (int) Math.pow(z, y);
         int i = 0, j = 0, k = 0;
         int counter = 0;
         while (counter < y) {
             k = 0;
             for (i = 0; i < (int) Math.pow(z, counter + 1); i++) {
-
                 for (j = 0; j < possibilities / ((int) Math.pow(z, counter + 1)); j++) {
                     x[k] += (String.valueOf(i % z));
                     k++;
