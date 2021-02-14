@@ -80,7 +80,6 @@ public class MasterMind {
                     if (checkArray(doubleForbidden, k)) {
                         continue;
                     }
-
                     if (temp.charAt(j) == mainTokens.get(i).charAt(k)) {
                         y++;
                         forbidden.add(k);
@@ -90,7 +89,6 @@ public class MasterMind {
             }
             forbidden.clear();
             doubleForbidden.clear();
-
             if (y != colorsRightPositionWrong) {
                 mainTokens.remove(i);
                 y = 0;
@@ -99,8 +97,6 @@ public class MasterMind {
             y = 0;
         }
         nextMove();
-
-
     }
 
     public boolean checkArray(List<Integer> forbidden, int checked) {
@@ -115,17 +111,12 @@ public class MasterMind {
     public void newGame() {
         guesses = 0;
         Scanner in = new Scanner(System.in);
-        System.out.printf("Hello, " + name + "." + " Enter number of positions: ");
+        System.out.printf(" Enter number of positions: ");
         positions = in.nextInt();
         System.out.printf("The number of positions: " + positions + ". Enter number of tokens: ");
         numberTokens = in.nextInt();
-        System.out.printf("The number of tokens used: " + numberTokens + ".");
-        System.out.println("Please wait. Generating array...");
-
         String[] tokens = new String[(int) Math.pow(numberTokens, positions)];
         generateArray(tokens, positions, numberTokens);
-
-        System.out.println("Done.");
         MasterMind mm = new MasterMind(tokens, positions, numberTokens);
 
     }
@@ -135,17 +126,8 @@ public class MasterMind {
         endTime = System.nanoTime();
         System.out.println("The calculation took: " + (endTime - startTime) / 1000000 + " milliseconds");
         Scanner in = new Scanner(System.in);
-
         if (mainTokens.size() == 1) {
             System.out.println("Your result: " + guessFix(mainTokens.get(0)) + "  --- guessID: " + nullremove(mainTokens.get(0)));
-
-            int playAgain = 0;
-            System.out.println("Play again? Press 1 for play again. Any key to exit.");
-            playAgain = in.nextInt();
-            if (playAgain == 1) {
-                newGame();
-            }
-            System.out.println("Exiting...");
             System.exit(0);
         }
 
@@ -162,7 +144,6 @@ public class MasterMind {
 
         response(colorsRightPositionWrong, positionsAndColorRight);
     }
-
 
     public static String guessFix(String a) {
         String returnString = "";
@@ -194,14 +175,8 @@ public class MasterMind {
         System.out.printf("The number of tokens/colors used: " + numberTokens + ".");
         System.out.println("Please wait. Generating array...");
 
-        long bytes = 0;
-        bytes = (long) Math.pow(numberTokens, positions) * (positions + 1) / 8;
-        System.out.println("The array size: " + bytes + " bytes " + "(" + bytes / 1000 + " KB)");
-
-
         String[] tokens = new String[(int) Math.pow(numberTokens, positions)];
         generateArray(tokens, positions, numberTokens);
-        System.out.println("Done.");
         MasterMind mm = new MasterMind(tokens, positions, numberTokens);
     }
 
