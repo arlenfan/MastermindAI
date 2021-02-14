@@ -146,9 +146,10 @@ public class MasterMind {
     }
 
     public static String guessFix(String a) {
+        //https://www.webgamesonline.com/mastermind/index.php
         String returnString = "";
         String colors[] = {"RED", "GREEN", "BLUE",
-                "YELLOW", "PURPLE", "BLACK", "ORANGE", "GRAY"};
+                "YELLOW", "BROWN", "ORANGE", "BLACK", "WHITE"};
         int i = 4; //to omit the "null"
         for (i = 4; i < a.length(); i++) {
             returnString += colors[(int) a.charAt(i) - 48];
