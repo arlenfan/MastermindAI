@@ -1,0 +1,8 @@
+.idea/
+*.iml
+*.out
+*.exe
+cmake-build-debug/
+*.gch
+*.class
+
