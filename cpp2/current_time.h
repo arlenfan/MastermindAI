@@ -3,7 +3,6 @@
 
 #include <chrono>
 #include <cstdint>
-#include "current_time.cpp"
 
 class CurrentTime {
     std::chrono::high_resolution_clock m_clock;

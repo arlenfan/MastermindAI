@@ -1,6 +1,7 @@
 import itertools
 import random
 import numpy as np
+import datetime
 # https://webgamesonline.com/mastermind/index.php
 def generateArray(uniqueColors, length):
     x = ["RED", "GREEN", "BLUE", "YELLOW", "BROWN", "ORANGE", "BLACK", "WHITE"]
@@ -23,6 +24,7 @@ def move(allPossibilities):
 
 
 def prune(arr, rightRight, rightWrong, guess):
+    start = datetime.datetime.now().microsecond / 1000
     toRemove = []
 
     for index, element in enumerate(arr):
@@ -41,6 +43,9 @@ def prune(arr, rightRight, rightWrong, guess):
         if rightWrongCount != rightWrong:
             toRemove.append(index)
     arr = arr[[x for x in range(len(arr)) if x not in toRemove]]
+    end = datetime.datetime.now().microsecond / 1000
+    print("This pruning step took ", (end-start), " milliseconds")
+    print()
     move(arr)
 
 

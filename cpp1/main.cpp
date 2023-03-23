@@ -6,11 +6,11 @@
 #include <iterator>
 #include <cstdlib>
 #include <unordered_set>
-#include "current_time.h"
+#include "current_time.cpp"
 
 
 using namespace std;
-CurrentTime current_time = new CurrentTime();
+CurrentTime current_time;
 template<typename InputIt, typename T>
 
 bool nextPermutationWithRepetition(InputIt begin, InputIt end, T from_value, T to_value) {
@@ -34,7 +34,7 @@ void prune(int rightRight, int wrongWrong, vector<int> guess);
 vector<vector<int>> all = {};
 
 void generateAll() {
-    vector<int> vec(4, 0); //length
+    vector<int> vec(6, 0); //length
     do {
         all.push_back(vec);
     } while (nextPermutationWithRepetition(vec.begin(), vec.end(), 0, 7)); //unique numbers, 7 for oct
@@ -74,6 +74,7 @@ void move() {
 void prune(int rightRight, int rightWrong, vector<int> guess) {
     uint64_t start1 = current_time.milliseconds();
     unordered_set<int> toRemove;
+    int startSize = all.size();
     for (int i = 0; i < all.size(); ++i) {
         vector<int> candidate = all[i];
         vector<bool> rightRightVector = {};
@@ -120,7 +121,10 @@ void prune(int rightRight, int rightWrong, vector<int> guess) {
 
     }
     uint64_t end1 = current_time.milliseconds();
-    cout << "This prune took " << (end1-start1) <<" milliseconds";
+    cout << "This prune took " << (end1-start1) <<" milliseconds"<<endl;
+        int endSize = all.size();
+        cout<<(startSize-endSize)<<" elements were removed."<<endl;
+        cout<< (end1-start1)/(startSize)<<" milliseconds per element checked."<<endl;
     move();
 
 }

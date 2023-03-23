@@ -9,6 +9,7 @@
 #include <string>
 #include <chrono>
 #include "pow.cpp"
+#include "current_time.cpp"
 
 using namespace std;
 
@@ -19,9 +20,9 @@ int guesses=0;
 int guessIndex=0;
 int rightWrong=0;
 int rightRight=0;
-
-auto start = std::chrono::system_clock::now();
-auto end1 = std::chrono::system_clock::now();
+CurrentTime current_time;
+    uint64_t start1 = current_time.milliseconds();
+    uint64_t end1 = current_time.milliseconds();
 
 void nextMove();
 string guessFix(string a);
@@ -39,7 +40,7 @@ for (int i=0;i<myPow(numberTokens, positions); i++)
         guesses++;
         cout <<   "Guess #" << guesses <<endl;
         cout << "Number of possibilities left: " << mainTokens.size() <<endl;
-        cout <<"Guess: " << guessFix(x[guessIndex]) << ")" <<endl;
+        cout <<"Guess: " << guessFix(x[guessIndex]) <<endl;
         cout<<"Enter number of right color(s) AND right position(s): "<<endl;
         cin>>rightRight;
                 cout<<"Enter number of right color(s) BUT wrong position(s): "<<endl;
@@ -49,9 +50,10 @@ for (int i=0;i<myPow(numberTokens, positions); i++)
 
     }
      void response(int colorsRightPositionWrong, int positionsAndColorRight) {
-        start = std::chrono::system_clock::now();
+        start1 = current_time.milliseconds();
         int x = 0, y = 0;
         string temp = mainTokens[guessIndex];
+
         for (int i = 0; i < mainTokens.size(); i++) {
             for (int j = 0; j < temp.length(); j++) {
                 if (mainTokens[i][j] == temp[j]) {
@@ -59,7 +61,7 @@ for (int i=0;i<myPow(numberTokens, positions); i++)
                 }
             }
             if (x != positionsAndColorRight) {
-                mainTokens.erase(i);
+                mainTokens.erase(mainTokens.begin()+i);
                 x = 0;
                 i--;
             }
@@ -103,7 +105,7 @@ for (int i=0;i<myPow(numberTokens, positions); i++)
             forbidden.clear();
             doubleForbidden.clear();
             if (y != colorsRightPositionWrong) {
-                mainTokens.erase(i);
+                mainTokens.erase(mainTokens.begin()+i);
                 y = 0;
                 i--;
             }
@@ -130,9 +132,9 @@ for (int i=0;i<myPow(numberTokens, positions); i++)
     }
 
        void nextMove() {
-               end1 = std::chrono::system_clock::now();
-               cout<<"The calculation took " <<(end1-start)<<" milliseconds."<<endl;
-               if (mainTokens.size()==1){
+               end1 =  current_time.milliseconds();
+               cout<<"The calculation took " <<(end1-start1)<<" milliseconds."<<endl;
+               if (mainTokens.size()<1){
                cout<<"Result: "<<mainTokens[0];
                return;
                }
@@ -164,12 +166,12 @@ for (int i=0;i<myPow(numberTokens, positions); i++)
 
 
 int main() {
-        positions=8;
+        positions=6;
         numberTokens=8;
 
         vector<string> tokens ((int) myPow(numberTokens, positions));
-        generateArray(tokens, positions, numberTokens);
-        MasterMind(tokens, positions, numberTokens);
+        mainTokens=generateArray(tokens, positions, numberTokens);
+        MasterMind(mainTokens, positions, numberTokens);
     return 0;
 }
 
