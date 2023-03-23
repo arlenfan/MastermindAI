@@ -166,7 +166,7 @@ for (int i=0;i<myPow(numberTokens, positions); i++)
 
 
 int main() {
-        positions=6;
+        positions=8;
         numberTokens=8;
 
         vector<string> tokens ((int) myPow(numberTokens, positions));

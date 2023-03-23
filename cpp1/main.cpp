@@ -34,7 +34,7 @@ void prune(int rightRight, int wrongWrong, vector<int> guess);
 vector<vector<int>> all = {};
 
 void generateAll() {
-    vector<int> vec(6, 0); //length
+    vector<int> vec(8, 0); //length
     do {
         all.push_back(vec);
     } while (nextPermutationWithRepetition(vec.begin(), vec.end(), 0, 7)); //unique numbers, 7 for oct
@@ -130,6 +130,10 @@ void prune(int rightRight, int rightWrong, vector<int> guess) {
 }
 
 int main() {
+	uint64_t temp1 = current_time.milliseconds();
+	uint64_t temp2 = current_time.milliseconds();
+	cout <<temp1<<endl;
+	cout << temp2<<endl;
     generateAll();
     move();
     return 0;
