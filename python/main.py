@@ -2,7 +2,7 @@ import itertools
 import random
 import numpy as np
 import datetime
-from multiprocessing import Pool
+import time
 
 # https://webgamesonline.com/mastermind/index.php
 def generateArray(uniqueColors, length):
@@ -25,7 +25,7 @@ def move(allPossibilities):
 
 
 def prune(arr, rightRight, rightWrong, guess):
-    start = datetime.datetime.now().microsecond
+    start = time.time()
     toRemove = []
 
     for index, element in enumerate(arr):
@@ -44,8 +44,8 @@ def prune(arr, rightRight, rightWrong, guess):
         if rightWrongCount != rightWrong:
             toRemove.append(index)
     arr = arr[[x for x in range(len(arr)) if x not in toRemove]]
-    end = datetime.datetime.now().microsecond
-    print("This pruning step took ", (end-start), " microsecond")
+    end = time.time()
+    print("This pruning step took ", (end-start), " sec")
     print()
     move(arr)
 
