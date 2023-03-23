@@ -2,13 +2,14 @@ import itertools
 import random
 import numpy as np
 import datetime
+from multiprocessing import Pool
+
 # https://webgamesonline.com/mastermind/index.php
 def generateArray(uniqueColors, length):
     x = ["RED", "GREEN", "BLUE", "YELLOW", "BROWN", "ORANGE", "BLACK", "WHITE"]
     array = [i for i in itertools.product(x[:uniqueColors], repeat=length)]
     array = np.array(array)
     return array
-
 
 def move(allPossibilities):
     print("Possibilities left to consider: ", len(allPossibilities))
@@ -24,7 +25,7 @@ def move(allPossibilities):
 
 
 def prune(arr, rightRight, rightWrong, guess):
-    start = datetime.datetime.now().microsecond / 1000
+    start = datetime.datetime.now().microsecond
     toRemove = []
 
     for index, element in enumerate(arr):
@@ -43,16 +44,16 @@ def prune(arr, rightRight, rightWrong, guess):
         if rightWrongCount != rightWrong:
             toRemove.append(index)
     arr = arr[[x for x in range(len(arr)) if x not in toRemove]]
-    end = datetime.datetime.now().microsecond / 1000
-    print("This pruning step took ", (end-start), " milliseconds")
+    end = datetime.datetime.now().microsecond
+    print("This pruning step took ", (end-start), " microsecond")
     print()
     move(arr)
 
 
 if __name__ == '__main__':
-    # uniqueColors = int(input("How many unique colors?"))
-    # length = int(input("What is the length of the sequence?"))
-    uniqueColors = 8
-    length = 4
+    uniqueColors = int(input("How many unique colors?"))
+    length = int(input("What is the length of the sequence?"))
+    # uniqueColors = 8
+    # length = 4
     allPossibilities = generateArray(uniqueColors=uniqueColors, length=length)
     move(allPossibilities=allPossibilities)
