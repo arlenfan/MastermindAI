@@ -11,6 +11,9 @@
 
 using namespace std;
 CurrentTime current_time;
+string colors[] = {"RED", "GREEN", "BLUE",
+                "YELLOW", "BROWN", "ORANGE", "BLACK", "WHITE"};
+
 template<typename InputIt, typename T>
 
 bool nextPermutationWithRepetition(InputIt begin, InputIt end, T from_value, T to_value) {
@@ -33,11 +36,11 @@ void prune(int rightRight, int wrongWrong, vector<int> guess);
 
 vector<vector<int>> all = {};
 
-void generateAll() {
-    vector<int> vec(8, 0); //length
+void generateAll(int positions, int numberTokens) {
+    vector<int> vec(positions, 0); //length
     do {
         all.push_back(vec);
-    } while (nextPermutationWithRepetition(vec.begin(), vec.end(), 0, 7)); //unique numbers, 7 for oct
+    } while (nextPermutationWithRepetition(vec.begin(), vec.end(), 0, numberTokens-1));
 
 }
 
@@ -50,10 +53,9 @@ void printVector() {
     }
 }
 
-
 void move() {
     int allSize = all.size();
-    cout << "Possibilities left to consider: " << all.size() << endl;
+    cout << "Possibilities left to consider: " << allSize << endl;
     if (allSize == 1) {
         cout << "Solution found: ";
         vector<int> solution = all[0];
@@ -63,7 +65,12 @@ void move() {
     int randomIndex = rand() % allSize;
     vector<int> guess = all[randomIndex];
     cout << "Guess index: " << randomIndex << endl;
+
     std::copy(guess.begin(), guess.end(), std::ostream_iterator<int>(std::cout, " "));
+    for (auto it=guess.begin();it!=guess.end();++it){
+        cout << colors[*it] << ' ';
+    }
+    cout << endl;
     int rightRight, rightWrong;
     cout << "Right color, right position: " << "Right color, wrong position: " << endl;
     cin >> rightRight >> rightWrong;
@@ -130,11 +137,12 @@ void prune(int rightRight, int rightWrong, vector<int> guess) {
 }
 
 int main() {
-	uint64_t temp1 = current_time.milliseconds();
-	uint64_t temp2 = current_time.milliseconds();
-	cout <<temp1<<endl;
-	cout << temp2<<endl;
-    generateAll();
+	int positions, numberTokens;
+	cout<<"Enter positions "<<endl;
+    cin>>positions;
+    cout<<"Enter number of tokens "<<endl;
+    cin>>numberTokens;
+    generateAll(positions, numberTokens);
     move();
     return 0;
 }

@@ -21,8 +21,8 @@ int guessIndex=0;
 int rightWrong=0;
 int rightRight=0;
 CurrentTime current_time;
-    uint64_t start1 = current_time.milliseconds();
-    uint64_t end1 = current_time.milliseconds();
+uint64_t start1 = 0;
+uint64_t end1 = 0;
 
 void nextMove();
 string guessFix(string a);
@@ -148,8 +148,6 @@ for (int i=0;i<myPow(numberTokens, positions); i++)
                 cout<<"Enter number of right color(s) BUT wrong position(s): "<<endl;
         cin>>rightWrong;
         response(rightWrong,rightRight);
-
-
     }
 
         string guessFix(string a) {
@@ -166,9 +164,10 @@ for (int i=0;i<myPow(numberTokens, positions); i++)
 
 
 int main() {
-        positions=8;
-        numberTokens=8;
-
+        cout<<"Enter positions "<<endl;
+        cin>>positions;
+        cout<<"Enter number of tokens "<<endl;
+        cin>>numberTokens;
         vector<string> tokens ((int) myPow(numberTokens, positions));
         mainTokens=generateArray(tokens, positions, numberTokens);
         MasterMind(mainTokens, positions, numberTokens);
