@@ -82,7 +82,7 @@ void prune(int rightRight, int rightWrong, vector<int> guess) {
     uint64_t start1 = current_time.milliseconds();
     unordered_set<int> toRemove;
     int startSize = all.size();
-    for (int i = 0; i < all.size(); ++i) {
+    for (int i = 0; i < startSize; ++i) {
         vector<int> candidate = all[i];
         vector<bool> rightRightVector = {};
         int rightRightCount = 0;

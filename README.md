@@ -10,5 +10,7 @@ Four solutions to the MM-AI problem
 
 TODO LIST:
 ```angular2html
+GFG permutations is incorrect. need to fix
+start at line 114 for MasterMindNew.java --- need method to find an element in a Java HashSet
 implement mastermindnew with efficient data structures.
 ```
