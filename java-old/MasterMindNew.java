@@ -1,13 +1,17 @@
 import java.util.*;
 import java.util.Random;
 
+
+
 public class MasterMindNew {
 
 
-    public static ArrayList<ArrayList<int>> all = new ArrayList<ArrayList<int>>();
+    public static List<int[]> all =new ArrayList<>();
 
     String colors[] = {"RED", "GREEN", "BLUE",
                 "YELLOW", "BROWN", "ORANGE", "BLACK", "WHITE"};
+
+
 
 
     public static void move(){
@@ -42,8 +46,9 @@ public class MasterMindNew {
         System.out.printf("The number of tokens/colors used: " + numberTokens + ".");
         System.out.println("\nPlease wait. Generating array...");
 
+
 //         generateArray(positions, numberTokens);
-        move();
+//         move();
 
 
     }
