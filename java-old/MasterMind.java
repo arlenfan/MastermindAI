@@ -185,9 +185,14 @@ public class MasterMind {
             for (i = 0; i < (int) Math.pow(z, counter + 1); i++) {
                 for (j = 0; j < possibilities / ((int) Math.pow(z, counter + 1)); j++) {
                     x[k] += (String.valueOf(i % z));
+//                     System.out.print((String.valueOf(i % z)));
+//                     System.out.print(k);
+//                     System.out.print(' ');
                     k++;
                 }
+
             }
+
             counter++;
         }
         return x;

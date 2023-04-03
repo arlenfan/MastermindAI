@@ -6,49 +6,46 @@ import java.util.Random;
 public class MasterMindNew {
 
 
-    public static List<int[]> all =new ArrayList<>();
+    public static List<List<Integer>> all =new ArrayList<>();
 
     public static String colors[] = {"RED", "GREEN", "BLUE",
                 "YELLOW", "BROWN", "ORANGE", "BLACK", "WHITE"};
 
 
-    public static void printAsColors(int[] a){
-        for (int i=0;i<a.length;++i){
-            System.out.printf(colors[a[i]]);
+    public static void printAsColors(List<Integer> a){
+        for (int i=0;i<a.size();++i){
+            System.out.printf(colors[a.get(i)]);
             System.out.printf(" ");
         }
         System.out.println();
     }
 
-    public static void CombinationRepetitionUtil(int chosen[], int arr[],
-            int index, int r, int start, int end) {
-        if (index == r) {
-        int[] temp = new int[r];
-            for (int i = 0; i < r; i++) {
-                temp[i] = arr[chosen[i]];
-            }
-            all.add(temp);
-            return;
+    public static void generateArray(int y, int z) {
+        int possibilities = (int) Math.pow(z, y);
+        for (int index=0;index<possibilities;++index){
+            all.add(new ArrayList<Integer>());
         }
-        for (int i = start; i <= end; i++) {
-            chosen[index] = i;
-            CombinationRepetitionUtil(chosen, arr, index + 1,
-                    r, i, end);
+        int i = 0, j = 0, k = 0;
+        int counter = 0;
+        while (counter < y) {
+            k = 0;
+            for (i = 0; i < (int) Math.pow(z, counter + 1); i++) {
 
-                   }
-        return;
-    }
+                for (j = 0; j < possibilities / ((int) Math.pow(z, counter + 1)); j++) {
+                       all.get(k).add(i%z);
+                    k++;
+                    }
+                }
+                counter++;
+            }
+        }
 
-    static void CombinationRepetition(int arr[], int n, int r) {
-        int chosen[] = new int[r + 1];
-        CombinationRepetitionUtil(chosen, arr, 0, r, 0, n - 1);
-    }
 
     public static void printAllArray(){
         // all is of type List<int[]>
         for (int i=0;i<all.size();++i){
-            for (int j=0;j<all.get(i).length;++j){
-                System.out.print(all.get(i)[j]);
+            for (int j=0;j<all.get(i).size();++j){
+                System.out.print(all.get(i).get(j));
             }
             System.out.println();
         }
@@ -67,26 +64,27 @@ public class MasterMindNew {
         }
     Random randomGenerator = new Random();
     int guessIndex = randomGenerator.nextInt(allSize);
+    List<Integer> guess=all.get(guessIndex);
     System.out.printf("Guess : ");
     printAsColors(all.get(guessIndex));
     System.out.println("Enter number of right color(s) AND right position(s): ");
     int rightRight = in.nextInt();
     System.out.println("Enter number of right color(s) BUT wrong position(s): ");
-    int wrongWrong = in.nextInt();
-    //  PRUNE
+    int rightWrong = in.nextInt();
+    prune(rightRight,rightWrong,guess);
 
     }
 
-    public static void prune(int rightRight, int rightWrong, int[] guess){
+    public static void prune(int rightRight, int rightWrong, List<Integer> guess){
         long start1 = System.nanoTime();
         HashSet<Integer> toRemove = new HashSet<>();
         int startSize = all.size();
         for (int i = 0; i < startSize; ++i){
-            int candidate[] = all.get(i);
+            List<Integer>candidate = all.get(i);
             ArrayList<Boolean> rightRightVector = new ArrayList<>();
             int rightRightCount = 0;
-            for (int j = 0; j != candidate.length; ++j) {
-               if (candidate[j] == guess[j]) {
+            for (int j = 0; j != candidate.size(); ++j) {
+               if (candidate.get(j) == guess.get(j)) {
                 rightRightVector.add(true);
                 rightRightCount++;
             } else {
@@ -104,14 +102,14 @@ public class MasterMindNew {
 
             for (int j = 0; j < rightRightVector.size(); ++j) {
                     if (!rightRightVector.get(j)) {
-                        maskedCandidate.add(candidate[j]);
-                        maskedGuess.add(guess[j]);
-                        maskedGuessSet.add(guess[j]);
+                        maskedCandidate.add(candidate.get(j));
+                        maskedGuess.add(guess.get(j));
+                        maskedGuessSet.add(guess.get(j));
                     }
                 }
                 int rightWrongCount = 0;
                 for (int j = 0; j < maskedCandidate.size(); ++j) {
-                    if (maskedGuessSet.find(candidate[j])) {
+                    if (maskedGuessSet.contains(candidate.get(j))) {
                         rightWrongCount++;
                     }
                 }
@@ -121,19 +119,17 @@ public class MasterMindNew {
         }
 
             for (int i = all.size() - 1; i >= 0; i--) {
-        if (toRemove.find(i) != toRemove.end()) {
-            all.erase(all.begin() + i);
+                if (toRemove.contains(i)) {
+            all.remove(i);
         }
 
         }
         long end1 = System.nanoTime();
-        System.out.printf("This prune took %.3f milliseconds", (end1-start1)/1000000);
+        System.out.printf("This prune took %.02f milliseconds\n", (double)(end1-start1)/1000000);
         int endSize = all.size();
-        System.out.printf("%d elements were removed.",(startSize-endSize));
-        System.out.printf("%.2f milliseconds per element checked.",(end1-start1)/(startSize));
+        System.out.printf("%d elements were removed.\n",(startSize-endSize));
+        System.out.printf("%.02f microseconds per element checked.\n",(double)(end1-start1)/(startSize)/1000);
         move();
-
-
 
     }
 
@@ -150,7 +146,9 @@ public class MasterMindNew {
             arr[i]=i;
         }
 
-        CombinationRepetition(arr, numberTokens, positions);
+//         CombinationRepetition(arr, numberTokens, positions);
+//         int[] tokens = new int[(int) Math.pow(numberTokens, positions)];
+        generateArray(positions, numberTokens);
 //         System.out.println(all.size());
 //         printAllArray();
         move();
